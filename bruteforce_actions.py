@@ -3,7 +3,7 @@ from itertools import combinations
 import pathlib
 import os
 
-
+#Fonction de chargement csv sous forme de dictionnaire
 def open_csv(filename):
     actions = []
     filepath = os.path.join(pathlib.Path(__file__).parent.resolve(), filename)
@@ -17,6 +17,8 @@ def open_csv(filename):
             actions.append((nom, cout, benefice))
     return actions
 
+
+#Fonction de calcul des bénéfices brute force
 def find_best_combinaison(actions, budget_max):
     best_profit = 0
     best_combinaison = []
@@ -31,7 +33,7 @@ def find_best_combinaison(actions, budget_max):
                     best_combinaison = combinaison
     return best_combinaison, best_profit
 
-
+#Affichage résultat
 actions = open_csv('actions_P1.csv')
 best_combinaison, profit = find_best_combinaison(actions, 500)
 for action in best_combinaison:

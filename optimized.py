@@ -3,6 +3,8 @@ import pathlib
 import os
 import pandas as pd
 
+
+#Fonction de chargement csv sous forme de dictionnaire
 def open_csv(filename):
     actions = []
     filepath = os.path.join(pathlib.Path(__file__).parent.resolve(), filename)
@@ -16,9 +18,11 @@ def open_csv(filename):
             actions.append((nom, cout, benefice))
     return actions
 
-def knapsack(actions, budget_max):
+
+#Fonction de calcul des bénéfices dynamique
+def sac_a_dos(actions, budget_max):
     nombre_actions = len(actions)
-    tableau = [[0] * (budget_max + 1) for _ in range(nombre_actions + 1)]
+    tableau = [[0] * (budget_max + 1) for t in range(nombre_actions + 1)]
     for i in range(1, nombre_actions + 1):
         name, cout, benefice = actions[i - 1]
         for w in range(budget_max + 1):
@@ -40,18 +44,20 @@ def knapsack(actions, budget_max):
     
     return best_combinaison, cout_total, profit_total, tableau
 
-def afficher_tableau(tableau):
+#Fonction affichage du tableau des bénéfices
+def afficher_tableau(tableau, step):
     df = pd.DataFrame(tableau)
-    df.columns = [f"€{i}" for i in range(len(df.columns))]
-    df.index = [f"A{i}" for i in range(len(df))]
+    colonnes = df.columns[::step]
+    df= df[colonnes]
+    
     return df
 
-
+#Affichage résultat
 actions = open_csv('actions_P1.csv')
-best_combinaison, cout_total, profit, tableau = knapsack(actions, 500)
+best_combinaison, cout_total, profit, tableau = sac_a_dos(actions, 500)
 for action in best_combinaison:
     print(f"{action[0]} Cout : {action[1]} Bénéfice: {round(action[2], 2)}")
 print(f"Profit total après 2 ans : {round(profit, 2)}")
 
 
-print(afficher_tableau(tableau))
+print(afficher_tableau(tableau, 50))
