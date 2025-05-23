@@ -11,7 +11,7 @@ def open_csv(filename):
         actionlist = csv.DictReader(csvfile)
         for ligne in actionlist:
             nom = ligne['Actions #']
-            cout = float(ligne['Coût par action (en euros)'])
+            cout = int(float(ligne['Coût par action (en euros)']))
             pourcent_benef = float(ligne['Bénéfice (après 2 ans)'].replace('%', '').strip())
             benefice = round(cout * (pourcent_benef / 100), 2)
             actions.append((nom, cout, benefice))
@@ -30,6 +30,7 @@ def find_best_combinaison(actions, budget_max):
                     best_profit = profit_total
                     best_combinaison = combinaison
     return best_combinaison, best_profit
+
 
 actions = open_csv('actions_P1.csv')
 best_combinaison, profit = find_best_combinaison(actions, 500)
