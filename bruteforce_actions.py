@@ -35,7 +35,9 @@ def find_best_combinaison(actions, budget_max):
 
 #Affichage résultat
 actions = open_csv('actions_P1.csv')
-best_combinaison, profit = find_best_combinaison(actions, 500)
+best_combinaison, profit, = find_best_combinaison(actions, 500)
+cout_total = sum(a[1] for a in best_combinaison)
 for action in best_combinaison:
     print(f"{action[0]} Cout : {action[1]} Bénéfice: {round(action[2], 2)}")
 print(f"Profit total après 2 ans : {round(profit, 2)}")
+print(f"Cout total: {cout_total}")

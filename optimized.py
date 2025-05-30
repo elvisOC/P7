@@ -54,6 +54,7 @@ def afficher_tableau(tableau, step):
 
 #Affichage résultat
 actions = open_csv('actions_P1.csv')
+print(pd.DataFrame(actions))
 best_combinaison, cout_total, profit, tableau = sac_a_dos(actions, 500)
 for action in best_combinaison:
     print(f"{action[0]} Cout : {action[1]} Bénéfice: {round(action[2], 2)}")
